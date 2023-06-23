@@ -1,0 +1,66 @@
+{{page-title 'Groups'}}
+<h1>Groups</h1>
+
+{{#each-in this.model as |key group| }}
+
+{{#if (eq key 'all_ranks')}}
+  <h2>Ranks</h2>
+
+  <i class="fa fa-minus-circle"></i> = Not allowed in character creation.
+
+  {{#each-in group as |faction rankGroups|}}
+  <h4>{{faction}}</h4>
+  <div class="table-responsive">
+  <table>
+    <thead>
+    {{#each-in rankGroups as |rankGroupName |}}
+    <th><b>{{rankGroupName}}</b></th>
+    {{/each-in}}
+    </thead>
+    <tr>
+    {{#each-in rankGroups as |rankGroupName ranks |}}
+    <td>
+      <ol>
+        {{#each-in ranks as |rankName allowedInCg|}}
+        <li>{{rankName}}
+          {{#if (not allowedInCg)}}
+          <i class="fa fa-minus-circle"></i>
+          {{/if}}
+        </li>
+        {{/each-in}}
+      </ol>
+    </td>
+    {{/each-in}}
+    </tr>
+  </table>
+  </div>
+  {{/each-in}}
+  
+{{else if (eq key 'rank')}}
+{{else}}
+  <h2>{{group.name}}</h2>
+
+  <p><AnsiFormat @text={{group.desc}} /></p>
+
+  {{#if group.wiki}}
+  <p><LinkTo @route="wiki-page" @model={{group.wiki}}>Wiki Page</LinkTo></p>
+  {{/if}}
+
+  {{#if group.freeform}}
+  <i>Freeform group.  No specific values.</i>
+  {{else}}
+  <ul>
+    {{#each group.values as |v| }}
+    <li><b>{{v.value}}</b>
+      {{#if v.desc}}
+      - {{v.desc}}
+      {{/if}}
+      </li>
+    {{/each}}
+  </ul>
+  {{/if}}
+{{/if}}
+{{/each-in}}
+
+
+{{outlet}}

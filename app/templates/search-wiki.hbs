@@ -1,0 +1,88 @@
+{{page-title "Search Wiki"}}
+
+<h1>Search Wiki</h1>
+
+<SearchBar />
+
+<hr>
+
+{{#if this.searchResults}}
+<a data-bs-toggle="collapse" href="#searchFields" class="btn btn-secondary btn-collapse">Show/Hide Search</a>
+{{/if}}
+
+<div id="searchFields" class="card-collapse collapse {{if this.searchResults '' 'show'}}">
+
+<div class="row">
+  
+  <div class="col col-xs-3">
+    <label>Title:</label>
+  </div>
+  
+  <div class="col col-xs-9">
+        <p><Input @type="text" size={{25}} id="title" @value={{this.searchTitle}} @enter={{action "search"}} /></p>
+  </div>
+  
+</div>
+
+<div class="row">
+  
+  <div class="col col-xs-3">
+        <label>Tag:</label>
+  </div>
+  
+  <div class="col col-xs-8">
+        <p><Input @type="text" size={{25}} id="tag" @value={{this.searchTag}} @enter={{action "search"}} /></p>
+  </div>
+  
+</div>
+
+<div class="row">
+  
+  <div class="col col-xs-3">
+    <label>Category:</label>
+  </div>
+  
+  <div class="col col-xs-9">
+        <p><Input @type="text" size={{25}} id="category" @value={{this.searchCategory}} @enter={{action "search"}} /></p>
+  </div>
+  
+</div>
+
+<div class="row">
+  <div class="col col-xs-3">
+    <label>Text:</label>
+  </div>
+
+  <div class="col col-xs-9">
+        <p><Input @type="text" size={{25}} id="text" @value={{this.searchText}} @enter={{action "search"}} /></p>
+  </div>
+</div>  
+
+    
+<div class="action-buttons">
+    <button class="btn btn-secondary" {{action 'reset'}}>Reset</button>
+    <button class="btn btn-primary" {{action 'search'}}>Search</button>
+</div>
+
+<p class="search-hint">Search is case-insensitive and matches ALL specified criteria.</p>
+
+</div>
+
+
+<hr>
+
+<FlashMessages />
+
+{{#if this.searchResults}}
+
+<ul>
+{{#each this.searchResults as |page|}}
+<li><LinkTo @route="wiki-page" @model={{page.id}}>{{page.heading}}</LinkTo></li>
+{{/each}}
+</ul>
+
+{{else}}
+<p>No search results.</p>
+{{/if}}
+
+{{outlet}}

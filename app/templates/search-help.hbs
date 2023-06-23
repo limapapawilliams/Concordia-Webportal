@@ -1,0 +1,72 @@
+{{page-title "Search Help"}}
+
+<h1>Search Help</h1>
+
+<SearchBar />
+
+<hr>
+
+{{#if this.searchResults}}
+<a data-bs-toggle="collapse" href="#searchFields" class="btn btn-secondary btn-collapse">Show/Hide Search</a>
+{{/if}}
+
+<div id="searchFields" class="card-collapse collapse {{if this.searchResults '' 'show'}}">
+
+<div class="row">
+  
+  <div class="col col-xs-3">
+    <label>Text:</label>
+  </div>
+  
+  <div class="col col-xs-9">
+        <p><Input @type="text" size={{25}} id="text" @value={{this.searchText}} @enter={{action "search"}} /></p>
+  </div>
+  
+</div>
+    
+<div class="action-buttons">
+    <button class="btn btn-secondary" {{action 'reset'}}>Reset</button>
+    <button class="btn btn-primary" {{action 'search'}}>Search</button>
+</div>
+
+<p class="search-hint">Search is case-insensitive and matches ALL specified criteria.</p>
+
+</div>
+
+<hr>
+
+<FlashMessages />
+
+{{#if this.searchResults}}
+<h2>Best Matches</h2>
+{{#if this.searchResults.probable_matches}}
+<ul>
+{{#each this.searchResults.probable_matches as |topic|}}
+<li><LinkTo @route="help-topic" @model={{topic.id}}>{{topic.name}}</LinkTo> - {{topic.summary}}</li>
+{{/each}}
+</ul>
+
+
+{{else}}
+None
+{{/if}}
+
+<h2>Other Possible Matches</h2>
+
+{{#if this.searchResults.possible_matches}}
+
+<ul>
+{{#each this.searchResults.possible_matches as |topic|}}
+<li><LinkTo @route="help-topic" @model={{topic.id}}>{{topic.name}}</LinkTo> - {{topic.summary}}</li>
+{{/each}}
+</ul>
+
+{{else}}
+None
+{{/if}}
+
+{{else}}
+<p>No search results.</p>
+{{/if}}
+
+{{outlet}}

@@ -1,0 +1,89 @@
+{{page-title 'Discussion Forum'}}
+<h1>Discussion Forum</h1>
+
+<p>The forum enables MU-wide discussion topics, available in-game and on the web portal.</p>
+
+{{#if this.model.is_muted}}
+<div class="alert alert-warning">The forum is muted.  You will not see notifications for new posts or replies.</div>
+{{/if}}
+  
+{{#if this.isAuthenticated}}
+
+<div class="action-buttons">
+    <LinkTo @route="search-forum" class="btn btn-secondary"><i class="fa fa-search" aria-hidden="true"></i> Search Forum</LinkTo>  
+
+
+    {{#if this.model.is_muted}}
+      <button {{action 'muteForum' false}} class="btn btn-secondary"><i class="fa fa-play" aria-hidden="true"></i> Unmute</button>
+    {{else}}
+      <button {{action 'muteForum' true}} class="btn btn-secondary"><i class="fa fa-pause" aria-hidden="true"></i> Mute</button>
+    {{/if}}
+      
+    <button {{action 'catchup'}} class="btn btn-secondary">Mark All Read</button>
+
+    <button {{action 'nextUnread'}} class="btn btn-secondary">Next Unread</button>
+</div>
+{{/if}}
+
+<table class="table table-striped">   
+<thead>
+    <th></th>
+    <th>Category</th>
+    <th class="hidden-xs hidden-sm">Description</th>
+    <th>Last Post</th>
+    <th></th>
+</thead>
+     
+<tbody>
+{{#each this.model.categories as |forum|}}
+    <tr>
+        <td>
+          {{#if forum.unread}}
+          <span class="badge rounded-pill bg-primary"> <i class="fa fa-flag" aria-label="New Activity"></i></span>
+          {{/if}}
+        </td>
+        
+         <td>
+           {{#if forum.can_read}}
+           <LinkTo @route="forum-category" @model={{forum.id}}>{{forum.name}}</LinkTo> 
+           {{else}}
+           <i>{{forum.name}} <i class="fa fa-lock" aria-label="Restricted"></i></i>
+           {{/if}}
+        </td>
+        
+        <td class="hidden-xs hidden-sm">
+        <AnsiFormat @text={{forum.description}} />
+        </td>
+        <td>
+            {{#if forum.last_activity}}
+              <CharIconTiny @char={{forum.last_activity.author}} /> {{forum.last_activity.date}}
+              <br>
+              {{if (eq forum.last_activity.type 'reply') 'Replied to' 'Posted'}}
+              <LinkTo @route="forum-topic" @models={{array forum.id forum.last_activity.id}}>{{forum.last_activity.subject}}</LinkTo>
+            {{/if}}
+            
+        </td>
+        <td>
+          <a href="#" {{action 'hideCategory' forum true}}>
+            <TooltipIcon @position="left" @message="Hide category." @icon="fa fa-eye-slash" />
+          </a>
+          
+        </td>
+    </tr>
+{{/each}}
+
+</tbody>
+</table>
+
+
+{{#if this.anyHidden}}
+<h4>Hidden</h4>
+{{#each this.model.hidden as |forum|}}
+<LinkTo @route="forum-category" @model={{forum.id}}>{{forum.name}}</LinkTo>          
+    <a href="#" {{action 'hideCategory' forum false}} >
+      [<TooltipIcon @position="top" @message="Show category." @icon="fa fa-eye" />]
+    </a> &nbsp; &nbsp;
+{{/each}}
+{{/if}}
+
+{{outlet}}

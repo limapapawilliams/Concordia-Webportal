@@ -1,0 +1,2 @@
+npm ci --no-audit --no-fund
+ember serve

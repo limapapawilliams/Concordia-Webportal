@@ -1,0 +1,85 @@
+{{page-title "Edit Channel"}}
+<h1>Edit Channel</h1>
+
+  
+   <div class="form-group row">
+    <div class="col-sm-3">
+        <label for="name" class="col-form-label">Name:</label>
+    </div>
+    <div class="col-sm-9">
+        <Input @type="text" size={{25}} id="name" @enter={{action "save"}} @value={{this.model.channel.name}} />
+    </div> 
+  </div>
+  
+   <div class="form-group row">
+    <div class="col-sm-3">
+        <label for="desc" class="col-form-label">Description:</label>
+    </div>
+    <div class="col-sm-9">
+        <Input @type="text" size={{25}} id="desc" @enter={{action "save"}} @value={{this.model.channel.desc}} />
+    </div> 
+  </div>
+  
+   <div class="form-group row">
+    <div class="col-sm-3">
+        <label for="color" class="col-form-label">Color:</label>
+    </div>
+    <div class="col-sm-9">
+        <Input @type="text" size={{25}} id="color" @enter={{action "save"}} @value={{this.model.channel.color}} />
+    </div> 
+  </div>
+  
+  <div class="form-group row">
+    <div class="col-sm-3">
+        <label for="canjoin" class="col-form-label">Can Join:</label>
+    </div>
+
+    <div class="col-sm-9">
+      <PowerSelectMultiple id="canjoin" @selected={{this.model.channel.can_join}} @options={{this.model.roles}} @onChange={{action "joinRolesChanged"}} as |role|>
+        {{role}}
+      </PowerSelectMultiple>
+      <p class="hint">Leave empty or use "everyone" to allow anyone to join.</p>
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <div class="col-sm-3">
+        <label for="cantalk" class="col-form-label">Can Talk:</label>
+    </div>
+
+    <div class="col-sm-9">
+      <PowerSelectMultiple id="cantalk" @selected={{this.model.channel.can_talk}} @options={{this.model.roles}} @onChange={{action "talkRolesChanged"}} as |role|>
+        {{role}}
+      </PowerSelectMultiple>
+      <p class="hint">Leave empty or use "everyone" to allow anyone to talk.</p>
+      
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <div class="col-sm-3">
+        <label for="discordchan" class="col-form-label">Discord Channel Name:</label>
+    </div>
+    <div class="col-sm-9">
+        <Input @type="text" size={{25}} id="discordchan" @enter={{action "save"}} @value={{this.model.channel.discord_channel}} />
+        <p class="hint">Requires <a href="https://github.com/aresmush/ares-discord" target="_blank">Discord integration</a>, installed separately.</p>
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <div class="col-sm-3">
+        <label for="discordwebhook" class="col-form-label">Discord Webhook URL:</label>
+    </div>
+    <div class="col-sm-9">
+        <Input @type="text" size={{90}} id="discordwebhook" @enter={{action "save"}} @value={{this.model.channel.discord_webhook}} />
+        <p class="hint">Requires <a href="https://github.com/aresmush/ares-discord" target="_blank">Discord integration</a>, installed separately.</p>
+    </div>
+  </div>
+  
+
+<div class="action-buttons">
+        <LinkTo @route="channels-manage" class="btn btn-secondary">Cancel</LinkTo>  
+        <button {{action 'save'}} class="btn btn-primary">Save</button>
+</div>
+      
+<FlashMessages />

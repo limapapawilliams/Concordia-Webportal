@@ -1,0 +1,108 @@
+{{page-title this.model.char.name}}
+
+<h1>{{this.model.char.profile_title}}</h1>
+
+<div class="row profile-wrap">
+    <ProfileDemographics @char={{this.model.char}} />
+</div>
+
+
+{{#if this.model.char.status_message}}
+        <div class="card card-default">
+            <div class="card-body status-message">
+                {{{this.model.char.status_message}}}
+                {{#if this.model.char.idle_notes}}
+                <AnsiFormat @text={{this.model.char.idle_notes}} />
+                {{/if}}
+            </div>
+        </div>
+{{/if}}
+
+<div class="profile-tab">
+    <ProfileSupplemental @char={{this.model.char}} @title="Supplemental Information" />
+</div>
+
+
+<div class="profile-tab">
+
+  <ProfileSystem @char={{this.model.char}} @game={{this.model.game}} @reloadChar={{action "reloadChar"}} />
+  
+</div>
+
+
+<div class="profile-tab">
+
+ <ProfileRelationships @char={{this.model.char}} />
+ 
+ </div>
+ 
+ <div class="profile-tab">
+ 
+<ProfileLogs @scenes={{this.model.scenes}} @sceneTypes={{this.model.sceneOptions.scene_types}} @char={{this.model.char}} />
+   
+</div>
+   
+<div class="profile-tab">
+
+ <ProfileGallery @char={{this.model.char}} />
+
+</div>
+
+
+<hr>
+<b>Tags:</b>  
+{{#each this.model.char.tags as |tag|}}
+  <LinkTo @route="wiki-tag" @model={{tag}}>{{tag}}</LinkTo>
+{{/each}}
+    
+
+<div class="action-buttons">
+        
+      {{#if this.model.char.last_profile_version}}
+          <LinkTo @route="char-source" @models={{array this.model.char.id this.model.char.last_profile_version}} class="btn btn-secondary">Source/History</LinkTo>
+      {{/if}}
+      {{#if this.model.char.can_approve}}
+        <LinkTo @route="chargen-char" @model={{this.model.char.id}} class="btn btn-secondary">Chargen</LinkTo>
+      {{/if}}
+      {{#if this.model.char.show_notes}}
+        <LinkTo @route="notes" @model={{this.model.char.name}} class="btn btn-secondary">Notes</LinkTo>
+      {{/if}}
+      {{#if this.model.char.can_manage}}
+        <button {{action (mut this.showFiles) true}} class="btn btn-secondary">Files</button>
+        <LinkTo @route="char-edit" @model={{this.model.char.id}} class="btn btn-primary">Edit</LinkTo>
+      {{/if}}
+</div>
+
+{{#if this.model.char.can_manage}}
+{{#if this.showFiles}}
+    <div class="card card-default">
+        
+        <div class="card-body">
+            
+        <p><b>Existing Character Files:</b></p>
+        
+       <div class="thumbnail-gallery">
+       {{#each this.model.char.files as |charFile|}}
+       
+       <div class="thumbnail-gallery-item">
+       <LinkTo @route="file" @models={{array charFile.folder charFile.name}}>
+       {{file.path}} <img src="/game/uploads/{{charFile.path}}" alt="{{charFile.name}}" class="thumbnail" title={{charFile.description}}>
+       </LinkTo>
+       </div>
+       {{/each}}
+       </div>
+       <div class="clearfix"/>
+        
+        <p><LinkTo @route="files">All Files</LinkTo></p>
+    
+        <FileUploader @folder={{this.model.char.name}} @uploaded={{action "fileUploaded"}} />
+        </div>
+    </div>
+{{/if}}
+{{/if}}
+
+
+
+{{outlet}}  
+
+    <script async defer src="//assets.pinterest.com/js/pinit.js"></script>

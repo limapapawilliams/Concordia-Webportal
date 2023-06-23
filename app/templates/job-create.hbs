@@ -1,0 +1,68 @@
+{{#if this.model.options.is_job_admin}}
+  {{page-title 'Create Job'}}
+  <h1>Create a Job</h1>
+{{else}}
+  {{page-title 'Create Request'}}
+  <h1>Create a Request</h1>
+{{/if}}
+
+<div class="create-job-block">
+
+   <div class="create-job-row">
+     <label>Title:</label>
+     <Input @type="text" size={{25}} id="title" @value={{this.title}} />
+   </div>
+
+   <div class="create-job-row">
+      <label>Submitter:</label>
+      <PowerSelect @selected={{this.submitter}} @options={{this.model.characters}} @searchField="name" @searchEnabled=true @onChange={{action "submitterChanged"}} as |char|>
+         {{char.name}}
+       </PowerSelect>
+     </div>
+     
+   <div class="create-job-row">
+       <label>Other Participants:</label>
+        <PowerSelectMultiple @selected={{this.participants}} @options={{this.model.characters}} @searchEnabled=true @searchField="name" @onChange={{action "participantsChanged"}} as |char|>
+         {{char.name}}
+       </PowerSelectMultiple>
+     </div>
+     
+     <div class="create-job-row">
+       <label>Tags:</label>
+       <Input @type="text" size={{25}} id="tags" @value={{this.tags}} />
+    </div>
+    
+    <div class="create-job-row">    
+      <label>Category:</label>
+
+          {{#if this.category}}
+            <span class="badge job-category job-category-{{this.category}}">
+            {{this.category}}
+            </span>
+          {{else}}
+            <span class="badge job-category job-category-{{this.model.options.request_category}}">
+            {{this.model.options.request_category}}
+            </span>
+          {{/if}}
+
+        <DropdownMenu @id="categoryDropdown" @title="Category">
+              {{#each this.model.options.category_values as |category| }}
+                <li><a href="#" {{action 'changeCategory' category}} class="dropdown-item"><span class="badge job-category job-category-{{category}}">&nbsp;</span> {{category}}</a></li>
+              {{/each}}
+        </DropdownMenu>
+      
+    </div>
+</div>
+
+     
+ <MarkdownEditor @text={{this.description}} />
+   
+<div class="action-buttons">
+  <LinkTo @route="jobs" class="btn btn-secondary">Cancel</LinkTo>
+  <button class="btn btn-primary" {{action 'createJob'}}>Create</button>
+</div>
+
+<FlashMessages />
+{{outlet}}
+
+

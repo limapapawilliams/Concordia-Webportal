@@ -1,0 +1,84 @@
+{{page-title 'FS3 Gear'}}
+<h1>FS3 Gear</h1>
+
+<h2>Weapons</h2>
+
+<table class="table table-striped">
+
+<thead>
+    <th>Weapon</th>
+    <th>Description</th>
+</thead>
+
+<tbody>
+{{#each this.model.weapons as |gear|}}
+<tr>
+    <td><LinkTo @route="fs3combat-gear-detail" @models={{array 'weapon' gear.key}}>{{gear.name}}</LinkTo></td> 
+    <td>{{gear.description}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+
+
+<h2>Armor</h2>
+
+<table class="table table-striped">
+
+<thead>
+    <th>Armor</th>
+    <th>Description</th>
+</thead>
+
+<tbody>
+{{#each this.model.armor as |gear|}}
+<tr>
+    <td><LinkTo @route="fs3combat-gear-detail" @models={{array 'armor' gear.key}}>{{gear.name}}</LinkTo></td> 
+    <td>{{gear.description}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+
+{{#if this.model.allow_vehicles}}
+
+<h2>Vehicles</h2>
+
+<table class="table table-striped">
+
+<thead>
+    <th>Vehicle</th>
+    <th>Description</th>
+</thead>
+
+<tbody>
+{{#each this.model.vehicles as |gear|}}
+<tr>
+    <td><LinkTo @route="fs3combat-gear-detail" @models={{array 'vehicle' gear.key}}>{{gear.name}}</LinkTo></td> 
+    <td>{{gear.description}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+{{/if}}
+
+{{#if this.model.allow_mounts}}
+<h2>Mounts</h2>
+
+<table class="table table-striped">
+
+<thead>
+    <th>Mounts</th>
+    <th>Description</th>
+</thead>
+
+<tbody>
+{{#each this.model.mounts as |gear|}}
+<tr>
+    <td><LinkTo @route="fs3combat-gear-detail" @models={{array 'mount' gear.key}}>{{gear.name}}</LinkTo></td> 
+    <td>{{gear.description}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+{{/if}}

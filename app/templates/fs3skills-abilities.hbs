@@ -1,0 +1,121 @@
+{{page-title 'FS3 Abilities'}}
+<h1>FS3 Abilities</h1>
+
+<h2>Attributes</h2>
+
+<AnsiFormat @text={{this.model.attrs_blurb}} />
+
+<table class="table table-striped">
+
+<thead>
+    <th>Attribute</th>
+    <th>Description</th>
+</thead>
+
+<tbody>
+{{#each this.model.attrs as |attr| }}
+<tr>
+    <td>{{attr.name}}</td> 
+    <td>{{attr.description}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+
+<h2>Action Skills</h2>
+
+<AnsiFormat @text={{this.model.action_blurb}} />
+
+<table class="table table-striped">
+
+<thead>
+    <th>Skill</th>
+    <th class="hidden-xs hidden-sm">Linked Attribute</th>
+    <th>Description</th>
+</thead>
+
+<tbody>
+{{#each this.model.action_skills as |ability| }}
+<tr>
+    <td>{{ability.name}}</td> 
+    <td class="hidden-xs hidden-sm">{{ability.linked_attr}}</td> 
+    <td>
+        {{ability.description}}
+        {{#if ability.specialties}}
+        <br> <b>Specialty Required:</b> {{ability.specialties}}
+        {{/if}}
+    
+    </td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+
+
+<h2>Background Skills</h2>
+
+<AnsiFormat @text={{this.model.background_blurb}} />
+
+<table class="table table-striped">
+
+<thead>
+    <th>Skill</th>
+    <th>Description</th>
+</thead>
+
+<tbody>
+{{#each this.model.backgrounds as |ability| }}
+<tr>
+    <td>{{ability.name}}</td> 
+    <td>{{ability.description}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+
+
+<h2>Languages</h2>
+
+<AnsiFormat @text={{this.model.language_blurb}} />
+
+<table class="table table-striped">
+
+<thead>
+    <th>Skill</th>
+    <th>Description</th>
+</thead>
+
+<tbody>
+{{#each this.model.languages as |ability| }}
+<tr>
+    <td>{{ability.name}}</td> 
+    <td>{{ability.description}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+
+{{#if this.model.use_advantages}}
+<h2>Advantages</h2>
+
+<AnsiFormat @text={{this.model.advantages_blurb}} />
+
+<table class="table table-striped">
+
+<thead>
+    <th>Advantage</th>
+    <th>Description</th>
+</thead>
+
+<tbody>
+{{#each this.model.advantages as |ability| }}
+<tr>
+    <td>{{ability.name}}</td> 
+    <td>{{ability.description}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+{{/if}}
+
+{{outlet}}

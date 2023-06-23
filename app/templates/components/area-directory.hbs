@@ -1,0 +1,34 @@
+<div class="area-entry">
+  <div class="area-entry-top">
+    {{#if this.areaIndex}}
+      <a name="area{{this.areaIndex}}" />
+    {{/if}}
+    
+    <h2><LinkTo @route="area" @model={{this.area.id}}>{{this.area.display_name}}</LinkTo></h2>
+
+    <div class="area-entry-summary">
+      {{#if this.area.summary}}
+        <p><AnsiFormat @text={{this.area.summary}} /></p>
+      {{/if}}
+      
+      {{#if this.area.rooms}}
+        <h3>Locations</h3>
+        <ul>
+          {{#each this.area.rooms as |r|}}
+          <li>
+            <LinkTo @route="location" @model={{r.id}}>{{r.name}}
+            {{#if r.icon_type}}
+              <i class="{{r.icon_display}}"></i>
+            {{/if}}
+          </LinkTo>  </li>
+          {{/each}}
+        </ul>
+      {{/if}}
+
+    </div>
+  </div>
+
+  <div class="area-buttons">
+    <LinkTo @route="area" @model={{this.area.id}} class="btn btn-secondary">View Details</LinkTo>
+  </div>
+</div>

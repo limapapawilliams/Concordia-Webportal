@@ -1,0 +1,140 @@
+{{page-title "Search Scenes"}}
+
+<h1>Search Scenes</h1>
+
+<SearchBar />
+
+<hr>
+
+{{#if this.searchResults}}
+<a data-bs-toggle="collapse" href="#searchFields" class="btn btn-secondary btn-collapse">Show/Hide Search</a>
+{{/if}}
+
+{{#if this.searchResults.warning}}
+<div class="alert alert-danger">
+  {{this.searchResults.warning}}
+</div>
+{{/if}}
+
+<div id="searchFields" class="card-collapse collapse {{if this.searchResults '' 'show'}}">
+
+<div class="row">
+  
+  <div class="col col-xs-3">
+    <label>Title:</label>
+  </div>
+  
+  <div class="col col-xs-9">
+        <p><Input @type="text" size={{25}} id="title" @value={{this.searchTitle}} @enter={{action "search"}} /></p>
+  </div>
+  
+</div>
+
+<div class="row">
+  
+  <div class="col col-xs-3">
+        <label>Participant Names:</label>
+  </div>
+  
+  <div class="col col-xs-9">
+        <p><Input @type="text" size={{25}} id="participant" @value={{this.searchParticipant}} @enter={{action "search"}} /></p>
+        <p class="hint">Enter one or more participant names (space-separated).</p>
+  </div>
+  
+</div>
+
+<div class="row">
+  
+  <div class="col col-xs-3">
+        <label>IC Date:</label>
+  </div>
+  
+  <div class="col col-xs-9">
+        <p><Input @type="text" size={{25}} id="icdate" @value={{this.searchDate}} @enter={{action "search"}} /></p>
+        <p class="hint">Matches the beginning of a scene's IC date, e.g. 2018-04 will find all scenes from April.</p>
+  </div>
+  
+</div>
+
+<div class="row">
+  
+  <div class="col col-xs-3">
+        <label>Scene Type:</label>
+  </div>
+  
+  <div class="col col-xs-9">
+
+    <PowerSelect @selected={{this.searchType}} @options={{this.sceneTypes}} @onChange={{action "sceneTypeChanged"}} as |name|>
+      {{name}}
+    </PowerSelect>
+    <br>
+  </div>
+  
+</div>
+
+<div class="row">
+  
+  <div class="col col-xs-3">
+        <label>Location:</label>
+  </div>
+  
+  <div class="col col-xs-9">
+        <p><Input @type="text" size={{25}} id="location" @value={{this.searchLocation}} @enter={{action "search"}} /></p>
+  </div>
+  
+</div>
+
+<div class="row">
+  
+  <div class="col col-xs-3">
+        <label>Tag:</label>
+  </div>
+  
+  <div class="col col-xs-9">
+        <p><Input @type="text" size={{25}} id="tag" @value={{this.searchTag}} @enter={{action "search"}} /></p>
+  </div>
+  
+</div>
+
+<div class="row">
+
+  <div class="col col-xs-3">
+        <label>Summary and Log:</label>
+  </div>
+
+  <div class="col col-xs-9">
+        <p><Input @type="text" size={{25}} id="log" @value={{this.searchLog}} @enter={{action "search"}} /></p>
+
+        <p class="hint">Matches a whole word or phrase from a log's summary or full log text.</p>
+  </div>
+
+</div>
+
+{{#if (not this.searchInProgress)}}
+    
+<div class="action-buttons">
+    <button class="btn btn-secondary" {{action 'reset'}}>Reset</button>
+    <button class="btn btn-primary" {{action 'search'}}>Search</button>
+</div>
+
+{{/if}}
+
+<p class="search-hint">Search is case-insensitive and matches ALL specified criteria.</p>
+
+</div>
+
+<hr>
+
+<FlashMessages />
+
+{{#if this.searchInProgress}}
+<i class="fas fa-spinner fa-spin"></i> Search In Progress...
+{{else if this.searchResults.pages}}
+
+<SceneList @scenes={{this.searchResults.scenes}} @pages={{this.searchResults.pages}} @sceneTypes={{this.model.sceneOptions.scene_types}} @filter={{this.searchType}} @page={{this.page}} @hideSearch={{true}} @goToPage={{action "goToPage"}} />
+
+{{else}}
+<p>No search results.</p>
+{{/if}}
+
+{{outlet}}

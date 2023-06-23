@@ -1,0 +1,18 @@
+{{page-title Notes}}
+<h1>Notes - {{this.model.name}}</h1>
+
+<p class="hint"><b>Player</b> notes are personal notes visible only to the player.  <b>Admin</b> notes are visible only to admins.  <b>Shared</b> notes are visible to both the player and admin.</p>
+
+{{#each this.model.notes as |section|}}
+
+  <h3>{{section.name}} Notes</h3>
+  <MarkdownEditor @text={{section.notes}} />
+  
+  
+{{/each}}
+
+
+<div class="action-buttons">
+  <LinkTo @route="notes" @model={{this.model.name}} class="btn btn-secondary">Cancel</LinkTo>  
+  <button {{action 'save'}} class="btn btn-primary">Save</button>
+</div>

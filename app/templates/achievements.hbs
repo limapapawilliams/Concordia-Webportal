@@ -1,0 +1,28 @@
+{{page-title "Achievements"}}
+<h1>Achievements</h1>
+
+<table class="achievement-table">
+  {{#each this.model as |achievement|}}
+  <tr>
+    <td class="col-xs-1"><i class="fa {{achievement.type_icon}} fa-2x" aria-hidden="true"></i></td>
+    <td class="col-xs-2">{{achievement.message}}</td>
+    <td class="col-xs-9">
+      <div class="achievement-chars">
+        {{#each achievement.chars as |char|}}      
+          <span class="achievement-char">{{char.name}}
+              {{#if char.count}} 
+                ({{char.count}})
+              {{/if}}
+           </span>
+         {{/each}}
+       </div>
+       
+       
+       {{#if achievement.levels}}
+       <p class="achievement-levels">Levels: {{achievement.levels}}</p>
+       {{/if}}
+       
+    </td>
+  </tr>
+  {{/each}}
+</table>

@@ -1,0 +1,15 @@
+{{page-title "Scenes"}}
+<h1>Scenes</h1>
+
+<p>The scenes archive includes all scenes that have been completed and shared.</p>
+
+<div class="action-buttons">
+   <LinkTo @route="scenes-live" class="btn btn-secondary">Active Scenes</LinkTo>
+   {{#if this.isApproved}}
+    <LinkTo @route="scene-create" class="btn btn-primary">Create Scene</LinkTo>
+    {{/if}}
+</div>
+
+<SceneList @scenes={{this.model.scenes.scenes}} @pages={{this.model.scenes.pages}} @sceneTypes={{this.model.sceneOptions.scene_types}} @filter={{this.filter}} @page={{this.page}} @filterChanged={{action "filterChanged"}} @goToPage={{action "goToPage"}} />
+
+{{outlet}}

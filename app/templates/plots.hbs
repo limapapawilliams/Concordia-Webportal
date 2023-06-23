@@ -1,0 +1,14 @@
+{{page-title 'Plots'}}
+<h1>Plots</h1>
+
+<p>Plots are a way to group related scenes. For archived plots, see <LinkTo @route="plots-archive">Plot Archive</LinkTo>.</p>
+
+{{#if this.isApproved}}
+
+<div class="action-buttons">
+  <LinkTo @route="plot-create" class="btn btn-primary">Create Plot</LinkTo>
+</div>
+
+{{/if}}
+
+<PlotsList @plots={{this.model}} />

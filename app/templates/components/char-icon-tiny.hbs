@@ -1,0 +1,8 @@
+<span class="inline-block">
+  <CharIconStatusBase @char={{this.char}} @iconClass="tiny-profile-icon" />
+  {{#if this.char.nick}}
+    {{this.char.nick}}
+  {{else}}
+    {{this.char.name}} 
+  {{/if}}
+</span>

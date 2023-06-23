@@ -1,0 +1,4 @@
+{{#each this.flashMessages.queue as |flash|}}
+ <FlashMessage @flash={{flash}} />
+{{/each}}
+{{yield}}

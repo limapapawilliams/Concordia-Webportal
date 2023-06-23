@@ -1,0 +1,32 @@
+{{page-title 'Combat Teams'}}
+<h1>Teams for Combat {{this.model.id}}</h1>
+
+<p>Quickly update everyone's teams in combat.  This won't affect their other settings.</p>
+
+<table>
+
+{{#each-in this.model.combatants as |id comb| }}
+
+<tr>
+  <td>{{comb.name}}</td>
+  <td>
+    <PowerSelect @selected={{comb.team}} @options={{this.teams}} @onChange={{action "teamChanged" id}} as |team|>
+      {{team}}
+    </PowerSelect>
+  </td>
+</tr>
+
+{{/each-in}}
+
+</table>
+
+<div class="action-buttons">
+
+  <LinkTo @route="combat" @model={{this.model.id}} class="btn btn-secondary">Cancel</LinkTo>  
+  <button class="btn btn-primary" {{action 'save'}} >Save</button>
+</div>
+
+<FlashMessages />
+
+    
+{{outlet}}

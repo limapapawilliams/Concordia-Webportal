@@ -1,0 +1,9 @@
+{{page-title "All Tags"}}
+<h1>All Tags</h1>
+
+<ul>
+{{#each this.model as |tag| }}
+  <li><LinkTo @route="wiki-tag" @model={{tag}}>{{tag}}</LinkTo></li>
+{{/each}}
+
+</ul>

@@ -1,0 +1,23 @@
+<div class="char-achievements">
+  {{#each this.achievements as |achieve| }}
+  <div class="char-achievement">
+  <i class="fa fa-2x fa-fw achievement-icon {{achieve.type_icon}}" aria-hidden="true"></i>
+
+  <span class="achievement-message">
+  {{achieve.message}}
+  </span>
+
+  {{#if achieve.count}}
+  ({{achieve.count}})
+  {{/if}}
+  </div>
+  {{/each}}
+</div>
+
+{{#if this.sceneStats}}
+<hr>
+
+<p><b>Words Written in Scenes:</b> {{this.sceneStats.pose_word_count}}</p>
+<p><b>Scenes Participated In:</b> {{this.sceneStats.scenes_participated_in}}</p>
+<p><b>Words Per Scene (average):</b> {{this.sceneStats.words_per_scene}}</p>
+{{/if}}

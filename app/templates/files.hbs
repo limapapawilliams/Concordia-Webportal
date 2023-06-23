@@ -1,0 +1,31 @@
+{{page-title 'Files'}}
+<h1>Files</h1>
+
+<p><a href="#upload"><i class="fas fa-angle-double-down"></i> Jump to Upload</a></p>
+
+<div class="folder-list">
+{{#each this.model as |folder|}}
+
+<div class="folder-item">
+        <LinkTo @route="folder" @model={{folder.name}}>
+            <i class="far fa-folder-open" aria-hidden="true"></i>
+            {{folder.name}}
+        </LinkTo>
+</div>
+{{/each}}
+</div>
+
+<a name="upload"></a>
+
+{{#if this.isApproved}}
+
+
+<div class="action-buttons">
+  <button {{action (mut this.showUpload) true}} class="btn btn-primary">Upload</button>
+</div>
+
+
+  {{#if this.showUpload}}
+    <FileUploader @uploaded={{action "uploaded"}} @folder="misc" />
+  {{/if}}
+{{/if}}

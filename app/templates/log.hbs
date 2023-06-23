@@ -1,0 +1,11 @@
+{{page-title this.model.name}}
+<h1>Log {{this.model.name}}</h1>
+
+<pre>
+{{#each this.model.lines as |line|}}
+{{line}}     
+
+{{/each}}
+</pre>
+
+{{outlet}}
